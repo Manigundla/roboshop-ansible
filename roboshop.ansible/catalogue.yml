@@ -8,12 +8,12 @@
 
   - name: Installing nodejs
     ansible.builtin.dnf:
-    - name: nodejs
+      name: nodejs
       state: present
   
   - name: creating user
     ansible.buitlin.user:
-    - name: roboshop
+      name: roboshop
   
   - name: downloading code
     ansible.builtin.get_url: 
@@ -53,5 +53,5 @@
     name: mongodb-org-shell
     state: present
 
-  - 
+
   
