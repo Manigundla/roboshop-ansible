@@ -30,7 +30,7 @@
       dest: /app
 
   - name: Installing dependencies
-    ansibe,builtin.command: npm install 
+    ansibe.builtin.command: npm install 
     args:
       chdir: /app
 
