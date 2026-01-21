@@ -50,8 +50,8 @@
 
   - name: Installing mongodb client
     ansible.builtin.dnf:
-    name: mongodb-org-shell
-    state: present
+      name: mongodb-org-shell
+      state: present
 
  
   
