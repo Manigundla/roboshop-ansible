@@ -55,9 +55,9 @@
       name: mongodb-org-shell
       state: present
 
-  #- name: get the catagories count
-   # ansible.builtin.command: mongo --host mongodb.chainverse.online --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
-    #register: product_count
+  - name: get the catagories count
+    ansible.builtin.command: mongo --host mongodb.chainverse.online --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
+    register: product_count
 
   #- name: print product count
     #ansible.builtin.debug:
@@ -65,4 +65,11 @@
 
   - name: load catalogue data
     ansible.builtin.shell: mongo --host mongodb.chainverse.online < /app/schema/catalogue.js
-    #when: product_count.stdout == "0"
+    when: product_count.stdout == "0"
+
+  - name: Enabling and starting catalogue
+    ansible.buitlin.service:
+      name: catalogue
+      state: started
+      enabled: true
+      
