@@ -57,7 +57,7 @@
         state: present
 
   - name: checking if data is already present
-    ansible.builtin.command: mongo --host mongodb.chainverse.online --quiet --eval 'db = db.getsiblingDB("catalogue"); db.products.count()'
+    ansible.builtin.command: mongo --host mongodb.chainverse.online --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
     register: product_count
   # we are using this command because if we load data for the second time we will get errors saying duplication, inorder to avoid loading the dat which already exist.
   - name: printing the product count
