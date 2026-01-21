@@ -11,8 +11,8 @@
       name: nodejs
       state: present
   
-  - name: creating user
-    ansible.buitlin.user:
+  - name: creating roboshop user
+    ansible.builtin.user:
       name: roboshop
   
   - name: downloading code
@@ -53,5 +53,5 @@
     name: mongodb-org-shell
     state: present
 
-
+ 
   
