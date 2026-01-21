@@ -29,7 +29,8 @@
     ansible.builtin.unarchive:
       src: /tmp/catalogue.zip
       dest: /app
-
+      remote_src: true
+      
   - name: Installing dependencies
     ansible.builtin.command: npm install 
     args:
