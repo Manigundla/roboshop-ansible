@@ -51,7 +51,7 @@
       daemon_reload: true
 
   - name: coping mongodb client repo
-    ansible.buitln.copy:
+    ansible.builtin.copy:
       src: mongodb.service
       dest: /etc/yum.repos.d/mongo.repo
 
