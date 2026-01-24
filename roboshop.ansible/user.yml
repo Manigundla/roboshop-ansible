@@ -1,0 +1,66 @@
+---
+- name: user
+  hosts: user
+  become: true
+  tasks: 
+  - name: Disabling old nodejs and enabing new version
+    ansible.builtin.shell:  dnf module disable nodejs -y ; dnf module enable nodejs:18 -y
+
+  - name: installing nodejs
+    ansible.builtin.dnf:
+      name: nodejs
+      state: present
+
+  - name: creating user
+    ansible.builtin.user: 
+      name: roboshop 
+
+  - name: Recursively remove app directory
+    ansible.builtin.file:
+      path: /app
+      state: absent
+
+  - name: creating directory
+    ansible.builtin.file:
+      path: /app
+      state: present
+
+  - name: downloading the code
+    ansible.builtin.get_url:
+      url: https://roboshop-builds.s3.amazonaws.com/user.zip
+      dest: /tmp
+
+  - name: unarchive the file
+    ansible.builtin.unarchive:
+      src: /tmp/user.zip
+      dest: /app
+      remote_src: yes
+
+  - name: Installing dependencies
+    ansible.builtin.command: npm install 
+    args:
+      chdir: /app
+
+  - name: copying service file
+    ansible.builtin.copy:
+      src: user.service
+      dest: /etc/systemd/system/user.service
+
+  - name: Reloading daemon 
+    ansible.builtin.systemd_service:
+      daemon_reload: true
+
+  - name: coping mongodb client repo
+    ansible.buitln.copy:
+      src: mongodb.service
+      dest: /etc/yum.repos.d/mongo.repo
+
+  - name: Installing mongodb client
+    ansible.builtin.dnf:
+      name: mongodb-org-shell
+      state: present
+
+  - name: checking for user count]
+    ansible.builtin.shell: mongo --host mongodb.chainverse.online --quiet --eval 
+
+
