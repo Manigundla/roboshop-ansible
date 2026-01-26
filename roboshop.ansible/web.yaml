@@ -16,7 +16,7 @@
   - name: creating html directory
     ansible.builtin.file:
       path: /usr/share/nginx/html
-      state: present
+      state: directory
 
   - name: Downloading web content
     ansible.builtin.get_url:
