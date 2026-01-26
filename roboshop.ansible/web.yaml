@@ -9,7 +9,7 @@
       state: present
   
   - name: deleting html directory
-    ansibel.builtin.file:
+    ansible.builtin.file:
       path: /usr/share/nginx/html
       state: absent
 
