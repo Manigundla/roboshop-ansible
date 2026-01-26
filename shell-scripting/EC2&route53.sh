@@ -31,7 +31,7 @@ do
     aws ec2 wait instance-running --instance-ids "$INSTANCE_ID"
 
     # Pick public IP only for MONGODB, private for others
-    if [ "$i" == "MONGODB" ]; then
+    if [ "$i" == "WEB" ]; then
         IP_FIELD="PublicIpAddress"
     else
         IP_FIELD="PrivateIpAddress"
@@ -44,7 +44,7 @@ do
         --output text)
 
 
-    echo "Created $i with $IP_FIELD: $RECORD_IP"
+    echo "Created $i with $IP_ADDRESS: $RECORD_IP"
 
     # UPSERT DNS record in Route53 (create or update)
 
