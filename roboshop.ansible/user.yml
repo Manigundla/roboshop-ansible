@@ -61,6 +61,15 @@
       state: present
 
   - name: checking for user count]
-    ansible.builtin.shell: mongo --host mongodb.chainverse.online --quiet --eval 
+    ansible.builtin.command: mongo --host mongodb.chainverse.online --quiet --eval 'db = db.getSiblingDB("users"); db.users.count()'
+    register: output
 
+  - name: loading data 
+    ansible.builtin.shell: mongo --host mongodb.chainverse.online </app/schema/user.js
+    when: output.stdout == "0"
 
+  - name: reloading user service
+    ansible.builtin.service:
+      name: user
+      state: restarted
+      enabled: true
