@@ -1,35 +1,26 @@
----
-- name: Installing sql database
+
+- name: install mysql component
   hosts: mysql
-  become: true
+  become: yes
   tasks:
-  - name: installig mysql sever
-    ansible.builtin.dnf:
-      name: mysql-server
+  - name: disable current version of mysql
+    ansible.builtin.command: dnf module disable mysql -y
+
+  - name: setup mysql5.7 repo
+    ansible.builtin.copy:
+      src: mysql.repo
+      dest: /etc/yum.repos.d/mysql.repo
+
+  - name: install mysql server
+    ansible.builtin.package:
+      name: mysql-community-server
       state: present
 
-  - name: starting and enabling
+  - name: start and enable mysql
     ansible.builtin.service:
       name: mysqld
       state: started
-      enabled: true
+      enabled: yes
 
-  - name: Install Python3 and pip
-    ansible.builtin.yum:
-      name:
-        - python3
-        - python3-pip
-      state: present
-
-  - name: Install PyMySQL
-    ansible.builtin.pip:
-      name: PyMySQL
-
-  - name: Set root password (local)
-    community.mysql.mysql_user:
-      name: root
-      host: localhost
-      password: "RoboShop@1"
-      login_unix_socket: /var/lib/mysql/mysql.sock
-      check_implicit_admin: true
-      state: present
+  - name: setup root password
+    ansible.builtin.command: mysql_secure_installation --set-root-pass RoboShop@1

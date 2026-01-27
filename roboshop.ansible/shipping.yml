@@ -60,16 +60,20 @@
       name: mysql
       state: present
 
-  - name: loading schema
-    ansible.builtin.shell: mysql -h mysql.chainverse.online -uroot -pRoboShop@1 < /app/db/schema.sql
+  - name: check cities schema exists or not
+    ansible.builtin.command:  mysql -h mysql.chainverse.online.online -uroot -p{{mysql_password}} -sN -e "SELECT COUNT(*) FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'cities'"
+    register: schema
 
-  - name: loading user data
-    ansible.builtin.shell: mysql -h mysql.chainverse.online -uroot -pRoboShop@1 < /app/db/app-user.sql 
+  - name: print output
+    ansible.builtin.debug:
+      msg: "schema output: {{schema}}"
 
-  - name: loading data
-    ansible.builtin.shell: mysql -h mysql.chainverse.online -uroot -pRoboShop@1 < /app/db/master-data.sql
+  - name: load cities data
+    ansible.builtin.shell: "mysql -h mysql.chainverse.online -uroot -p{{mysql_password}}  < /app/schema/shipping.sql"
+    when: schema.stdout != "1"
 
-  - name: restarting shipping
+  - name: start and enable shipping
     ansible.builtin.service:
       name: shipping
       state: restarted
+      enabled: yes

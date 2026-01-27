@@ -1,12 +1,11 @@
+
 [Unit]
 Description=Shipping Service
 
 [Service]
 User=roboshop
-// highlight-start
 Environment=CART_ENDPOINT=cart.chainverse.online:8080
 Environment=DB_HOST=mysql.chainverse.online
-// highlight-end
 ExecStart=/bin/java -jar /app/shipping.jar
 SyslogIdentifier=shipping
 
