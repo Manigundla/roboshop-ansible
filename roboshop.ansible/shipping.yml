@@ -9,8 +9,7 @@
       state: present
 
   - name: creating user
-    ansible.builtin.user:
-      name: roboshop
+    ansible.builtin.command: useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop 
 
   - name: creating directory
     ansible.builtin.file:
@@ -19,7 +18,7 @@
 
   - name: download shipping code
     ansible.builtin.get_url:
-      url: https://roboshop-builds.s3.amazonaws.com/shipping.zip
+      url: https://roboshop-artifacts.s3.amazonaws.com/shipping-v3.zip
       path: /tmp/shipping.zip
 
   - name: unzipping the code
@@ -59,12 +58,14 @@
       name: mysql
       state: present
 
+  #- name: check cities schema exist or not
+   # ansible.builtin.command: 
 
 
 
 
 
-  - name: restarting shipping
-    ansible.builtin.servicea:
-      name: shipping
-      state: restarted
+  #- name: restarting shipping
+   # ansible.builtin.servicea:
+    #  name: shipping
+     # state: restarted
