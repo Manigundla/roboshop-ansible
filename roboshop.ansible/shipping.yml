@@ -9,21 +9,6 @@
     loop:
     - maven
     - mysql
-  - name: Install python3 and pip
-    ansible.builtin.yum:
-      name:
-        - python3
-        - python3-pip
-      state: present
-
-  - name: Install required python packages
-    ansible.builtin.pip:
-      name:
-        - cryptography
-        - PyMySQL
-      executable: pip3
-
-
     
   - name: install PyMySQL and cryptography 
     ansible.builtin.pip:
@@ -95,7 +80,7 @@
       name: all
       login_user: root
       login_password: RoboShop@1
-      login_host: mysql.chainverse.online
+      login_host: mysql.daws84s.site
       state: import
       target: "{{ item }}"
     loop:
