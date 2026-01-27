@@ -10,6 +10,7 @@
 
   - name: creating user
     ansible.builtin.command: useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop 
+    ignore_error: true
 
   - name: creating directory
     ansible.builtin.file:
