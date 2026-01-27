@@ -54,11 +54,6 @@
     ansible.builtin.systemd_service:
       daemon_reload: true
 
-  - name: starting and enabling shipping
-    ansible.builtin.service:
-      name: shipping
-      state: started
-      enabled: true
 
   - name: Installing mysql
     ansible.builtin.dnf:
