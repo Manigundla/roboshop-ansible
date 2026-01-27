@@ -2,6 +2,8 @@
 - name: shipping
   hosts: shipping
   become: true
+  vars:
+    mysql_password: RoboShop@1
   tasks:
   - name: installing maven
     ansible.builtin.dnf:
