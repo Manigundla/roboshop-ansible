@@ -43,12 +43,12 @@
       dest: /etc/systemd/system/shipping.service
       remote_src: true
       
-  - name: daemon_reload
+  - name: daemon reloading 
     ansible.builtin.systemd_service:
-    daemon_reload: true
+      daemon_reload: true
 
   - name: starting and enabling shipping
-    ansible.builtin.servicea:
+    ansible.builtin.service:
       name: shipping
       state: started
       enabled: true
