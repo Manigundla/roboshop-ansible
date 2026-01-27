@@ -1,14 +1,16 @@
 [Unit]
 Description=Shipping Service
+After=network.target
 
 [Service]
 User=roboshop
-// highlight-start
-Environment=CART_ENDPOINT=cart.chainverse.online:8080
-Environment=DB_HOST=mysql.chainverse.online
-// highlight-end
+WorkingDirectory=/app
+Environment="CART_ENDPOINT=cart.chainverse.online:8080"
+Environment="DB_HOST=mysql.chainverse.online"
 ExecStart=/bin/java -jar /app/shipping.jar
 SyslogIdentifier=shipping
+Restart=always
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
