@@ -75,6 +75,6 @@
     ansible.builtin.shell: mysql -h mysql.chainverse.online -uroot -pRoboShop@1 < /app/db/master-data.sql
 
   - name: restarting shipping
-    ansible.builtin.servicea:
+    ansible.builtin.service:
       name: shipping
       state: restarted
