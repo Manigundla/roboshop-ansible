@@ -32,7 +32,7 @@
   - name: unzipping the code
     ansible.builtin.unarchive:
       src: /tmp/shipping.zip
-      path: /app
+      dest: /app
       remote_src: true
 
   - name: Installling dependencies
