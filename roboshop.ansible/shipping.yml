@@ -65,14 +65,16 @@
       name: mysql
       state: present
 
-  #- name: check cities schema exist or not
-   # ansible.builtin.command: 
+  - name: loading schema
+    anisble.builtin.shell: mysql -h mysql.chainverse.online -uroot -pRoboShop@1 < /app/db/schema.sql
 
+  - name: loading user data
+    ansible.buitlin.shell: mysql -h mysql.chainverse.online -uroot -pRoboShop@1 < /app/db/app-user.sql 
 
+  - name: loading data
+    ansible.builtin.shell: mysql -h mysql.chainverse.online -uroot -pRoboShop@1 < /app/db/master-data.sql
 
-
-
-  #- name: restarting shipping
-   # ansible.builtin.servicea:
-    #  name: shipping
-     # state: restarted
+  - name: restarting shipping
+    ansible.builtin.servicea:
+      name: shipping
+      state: restarted
