@@ -8,9 +8,16 @@
       name: maven 
       state: present
 
-  - name: creating user
-    ansible.builtin.command: useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop 
-    ignore_error: true
+  - name: Create roboshop system user
+    ansible.builtin.user:
+      name: roboshop
+      comment: "roboshop system user"
+      home: /app
+      shell: /sbin/nologin
+      system: true
+      create_home: true
+      state: present
+
 
   - name: creating directory
     ansible.builtin.file:
