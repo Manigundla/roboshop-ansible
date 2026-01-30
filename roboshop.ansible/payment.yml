@@ -44,7 +44,7 @@
   
   - name: copying service repo
     ansible.builtin.copy:
-      src: python.service
+      src: payment.service
       dest: /etc/systemd/system/payment.service
 
   - name: daemon reloading
