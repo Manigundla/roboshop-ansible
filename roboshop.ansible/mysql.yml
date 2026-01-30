@@ -2,17 +2,27 @@
   hosts: mysql
   become: yes
   tasks:
-  - name: install mysql server
-    ansible.builtin.dnf:
-      name: mysql-server
-      state: installed
+    - name: install mysql server
+      ansible.builtin.dnf:
+        name: mysql-server
+        state: present
 
-  - name: start mysql server
-    ansible.builtin.service:
-      name: mysqld
-      state: started
-      enabled: yes
+    - name: start mysql server
+      ansible.builtin.service:
+        name: mysqld
+        state: started
+        enabled: yes
 
+    - name: Set root password (fresh install)
+      ansible.builtin.shell: |
+        mysql -uroot -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'RoboShop@1'; FLUSH PRIVILEGES;"
+      args:
+        creates: /root/.mysql_root_password_set
+      register: setpass
+      changed_when: setpass.rc == 0
 
-  - name: setp root password
-    ansible.builtin.command: mysql_secure_installation --set-root-pass RoboShop@1
+    - name: Mark root password set
+      ansible.builtin.file:
+        path: /root/.mysql_root_password_set
+        state: touch
+      when: setpass is succeeded
