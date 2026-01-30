@@ -82,19 +82,20 @@
   #     login_db: cities
 
   - name: import data
-    tags:
-    - import
+    tags: [import]
     community.mysql.mysql_db:
       name: all
-      login_user: root
+      login_user: roboshop
       login_password: RoboShop@1
       login_host: mysql.chainverse.online
       state: import
       target: "{{ item }}"
     loop:
-    - /app/db/schema.sql
-    - /app/db/app-user.sql
-    - /app/db/master-data.sql
+      - /app/db/schema.sql
+      - /app/db/app-user.sql
+      - /app/db/master-data.sql
+      no_log: true
+
 
   - name: restart shipping
     tags:
