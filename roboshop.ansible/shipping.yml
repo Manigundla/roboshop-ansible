@@ -94,7 +94,7 @@
       - /app/db/schema.sql
       - /app/db/app-user.sql
       - /app/db/master-data.sql
-      no_log: true
+    no_log: true
 
 
   - name: restart shipping
